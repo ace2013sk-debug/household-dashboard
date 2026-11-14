@@ -774,7 +774,7 @@ document.addEventListener('mousemove',stopTrendChartHover,true);
 #cb .ft input{flex:1;min-width:0;border:3px solid #0A0A0A;border-radius:9px;padding:6px 8px;font-size:13px;font-weight:700;font-family:inherit;background:#FBF7EF}
 #cb .ft button{border:3px solid #0A0A0A;background:#7EF0A5;border-radius:9px;font-weight:900;font-size:13px;padding:0 12px;cursor:pointer}
 #cb .rz{position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 50%,#0A0A0A 50%,#0A0A0A 58%,transparent 58%,transparent 70%,#0A0A0A 70%,#0A0A0A 78%,transparent 78%)}
-#mn{position:fixed;inset:0;z-index:99995;display:none;background:#FBF7EF;overflow:hidden}
+#mn{position:fixed;top:0;bottom:0;right:0;left:var(--mnL,0px);z-index:60;display:none;background:#FBF7EF;overflow:hidden}
 #mn.open{display:block}
 #mn .sb{position:absolute;left:0;top:0;bottom:0;width:clamp(170px,17vw,230px);background:#FBF7EF;border-right:5px solid #0A0A0A;padding:12px 10px;overflow:auto;z-index:5;transition:transform .2s}
 #mn.sbc .sb{transform:translateX(-100%)}
@@ -875,7 +875,7 @@ const FAQ=[
 const cb=$('#cb'),bd=$('#cbBd');
 const add=(h,c)=>{const d=document.createElement('div');d.className='m '+c;if(typeof h==='string')d.textContent=h;else d.appendChild(h);bd.appendChild(d);bd.scrollTop=bd.scrollHeight;return d};
 const showFaq=()=>{const w=document.createElement('div');w.className='faq';const p=document.createElement('div');p.textContent='자주 하는 질문입니다. 눌러서 확인하세요.';p.style.marginBottom='6px';w.appendChild(p);FAQ.forEach((f,i)=>{const b=document.createElement('button');b.type='button';b.innerHTML='<i>'+(i+1)+'.</i>';b.append(f.q);b.onclick=()=>ask(i);w.appendChild(b)});add(w,'b')};
-const ask=i=>{const f=FAQ[i];add(f.q,'u');const w=document.createElement('div');w.append(f.a);const g=document.createElement('button');g.type='button';g.className='go';g.textContent='상세 페이지 ▶';g.title=f.t.l;g.onclick=()=>{if(f.t.m)openManual(f.t.m-1);else{closeManual();clickNav(f.t.p)}};w.appendChild(document.createElement('br'));w.appendChild(g);add(w,'b')};
+const ask=i=>{const f=FAQ[i];add(f.q,'u');const w=document.createElement('div');w.append(f.a);const g=document.createElement('button');g.type='button';g.className='go';g.textContent='상세 페이지 ▶';g.title=f.t.l;g.onclick=()=>{if(f.t.m)openManual(f.t.m-1);else{closeManual(false);clickNav(f.t.p)}};w.appendChild(document.createElement('br'));w.appendChild(g);add(w,'b')};
 const match=s=>{s=s.replace(/\s/g,'');let best=-1,sc=0;FAQ.forEach((f,i)=>{let n=0;f.k.forEach(k=>{if(s.includes(k))n+=k.length});if(n>sc){sc=n;best=i}});return best};
 const openCb=()=>{if(!cb.classList.contains('open')){cb.classList.add('open');if(!bd.children.length){add('안녕하세요. 가계부 대시보드 챗봇입니다. 아래 질문을 눌러 보세요.','b');showFaq()}fit();$('#cbIn').focus()}};
 const closeCb=()=>cb.classList.remove('open');
@@ -926,8 +926,11 @@ const goto=i=>{cur=clamp(i,0,N-1);stage.querySelectorAll('.sl').forEach(s=>{cons
  document.querySelectorAll('#mnDots i').forEach(d=>d.classList.toggle('on',+d.dataset.i===cur));
  $('#mnPn').textContent=(cur+1)+' / '+N;$('#mnPv').disabled=cur===0;$('#mnNx').disabled=cur===N-1;
  const on=document.querySelector('#mnSb .it.on');if(on&&on.scrollIntoView)try{on.scrollIntoView({block:'nearest'})}catch(e){}};
-function openManual(i){mn.classList.add('open');if(innerWidth<=900)mn.classList.add('sbc');goto(i||0)}
-function closeManual(){mn.classList.remove('open')}
+let prevNav=null;
+const setL=()=>{const sb=document.querySelector('.dashboard-viewport .sidebar,.sidebar');const r=sb?sb.getBoundingClientRect():{right:0};mn.style.setProperty('--mnL',Math.max(0,Math.round(r.right))+'px')};
+addEventListener('resize',()=>{if(mn.classList.contains('open'))setL()});
+function openManual(i){setL();const act=document.querySelector('.nav-item.active:not(#mnOpen)');if(act)prevNav=act;document.querySelectorAll('.nav-item.active').forEach(b=>b.classList.remove('active'));const mo=document.getElementById('mnOpen');if(mo)mo.classList.add('active');mn.classList.add('open');if(innerWidth<=900)mn.classList.add('sbc');goto(i||0)}
+function closeManual(restore){if(!mn.classList.contains('open'))return;mn.classList.remove('open');const mo=document.getElementById('mnOpen');if(mo)mo.classList.remove('active');if(restore!==false&&prevNav&&!document.querySelector('.nav-item.active'))prevNav.classList.add('active')}
 window.openManual=openManual;window.closeManual=closeManual;
 buildSb();buildSl();
 mn.addEventListener('click',e=>{const t=e.target;let b;
@@ -937,10 +940,11 @@ mn.addEventListener('click',e=>{const t=e.target;let b;
  if(t.closest('#mnPv')){goto(cur-1);return}if(t.closest('#mnNx')){goto(cur+1);return}
  if(t.closest('#mnClose')){closeManual();return}
  if(t.closest('#mnTg')){const c=mn.classList.toggle('sbc');$('#mnTg').setAttribute('aria-expanded',c?'false':'true');return}
- if(b=t.closest('[data-go]')){closeManual();clickNav(b.dataset.go);return}
+ if(b=t.closest('[data-go]')){closeManual(false);clickNav(b.dataset.go);return}
  if(t.closest('[data-cb]')){openCb();return}
  if(t.closest('[data-close]')){closeManual()}});
 document.addEventListener('keydown',e=>{if(!mn.classList.contains('open'))return;if(/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||''))return;if(e.key==='ArrowRight')goto(cur+1);else if(e.key==='ArrowLeft')goto(cur-1);else if(e.key==='Escape')closeManual();else if(e.key==='s'||e.key==='S')$('#mnTg').click()});
+document.addEventListener('click',e=>{const b=e.target.closest('.nav-item[data-page-target]');if(b&&mn.classList.contains('open'))closeManual(false)},true);
 /* 사이드바에 매뉴얼 메뉴 추가 */
 const addMenu=()=>{const menu=document.querySelector('.sidebar .menu');if(!menu||menu.querySelector('#mnOpen'))return;const b=document.createElement('button');b.type='button';b.id='mnOpen';b.className='nav-item';b.innerHTML='<span class="nav-icon">📖</span>매뉴얼';b.addEventListener('click',()=>openManual(0));menu.appendChild(b)};
 addMenu();new MutationObserver(addMenu).observe(document.body,{childList:true,subtree:true});
