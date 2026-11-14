@@ -749,6 +749,204 @@ document.addEventListener('mousemove',stopTrendChartHover,true);
   setTimeout(applyNetWorthY0Position,0);
 })();
 </script>
+<!--ADDON-START-->
+<style id="addon-chatbot-manual-style">
+#cb,#cbFab,#mn{font-family:Pretendard,"Malgun Gothic",sans-serif;color:#0A0A0A;letter-spacing:0}
+#cb *,#mn *{box-sizing:border-box}
+#cbFab{position:fixed;right:18px;bottom:18px;z-index:99990;width:58px;height:58px;border-radius:50%;border:4px solid #0A0A0A;background:#FFE81A;box-shadow:4px 4px 0 #0A0A0A;font-size:26px;cursor:pointer;padding:0;line-height:1}
+#cbFab:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #0A0A0A}
+#cb{position:fixed;z-index:99991;display:none;flex-direction:column;background:#FBF7EF;border:4px solid #0A0A0A;box-shadow:6px 6px 0 #0A0A0A;border-radius:14px;overflow:hidden;min-width:280px;min-height:320px}
+#cb.open{display:flex}
+#cb .hd{display:flex;align-items:center;gap:8px;padding:9px 10px;background:#BF8CFF;border-bottom:4px solid #0A0A0A;cursor:move;user-select:none;touch-action:none}
+#cb .hd b{flex:1;font-size:15px;font-weight:900}
+#cb .hd button{border:3px solid #0A0A0A;background:#fff;border-radius:8px;font-weight:900;font-size:13px;padding:2px 8px;cursor:pointer;line-height:1.3}
+#cb .bd{flex:1;min-height:0;overflow:auto;padding:10px;display:flex;flex-direction:column;gap:9px;scrollbar-width:thin}
+#cb .m{max-width:92%;padding:8px 10px;border:3px solid #0A0A0A;border-radius:12px;font-size:13px;line-height:1.5;font-weight:700;background:#fff;word-break:keep-all;overflow-wrap:anywhere}
+#cb .m.u{align-self:flex-end;background:#7EF0A5}
+#cb .m.b{align-self:flex-start;box-shadow:3px 3px 0 #0A0A0A}
+#cb .go{display:inline-block;margin-top:7px;border:3px solid #0A0A0A;background:#FFE81A;box-shadow:2px 2px 0 #0A0A0A;border-radius:8px;font-weight:900;font-size:12px;padding:4px 10px;cursor:pointer}
+#cb .go:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #0A0A0A}
+#cb .faq{display:flex;flex-direction:column;gap:5px}
+#cb .faq button{text-align:left;border:3px solid #0A0A0A;background:#fff;border-radius:9px;padding:5px 8px;font-size:12.5px;font-weight:800;cursor:pointer;line-height:1.35}
+#cb .faq button:hover{background:#FFE81A}
+#cb .faq button i{font-style:normal;display:inline-block;min-width:22px;margin-right:4px;color:#8a36bd}
+#cb .ft{display:flex;gap:6px;padding:8px;border-top:4px solid #0A0A0A;background:#fff}
+#cb .ft input{flex:1;min-width:0;border:3px solid #0A0A0A;border-radius:9px;padding:6px 8px;font-size:13px;font-weight:700;font-family:inherit;background:#FBF7EF}
+#cb .ft button{border:3px solid #0A0A0A;background:#7EF0A5;border-radius:9px;font-weight:900;font-size:13px;padding:0 12px;cursor:pointer}
+#cb .rz{position:absolute;right:0;bottom:0;width:20px;height:20px;cursor:nwse-resize;touch-action:none;background:linear-gradient(135deg,transparent 50%,#0A0A0A 50%,#0A0A0A 58%,transparent 58%,transparent 70%,#0A0A0A 70%,#0A0A0A 78%,transparent 78%)}
+#mn{position:fixed;inset:0;z-index:99995;display:none;background:#FBF7EF;overflow:hidden}
+#mn.open{display:block}
+#mn .sb{position:absolute;left:0;top:0;bottom:0;width:clamp(170px,17vw,230px);background:#FBF7EF;border-right:5px solid #0A0A0A;padding:12px 10px;overflow:auto;z-index:5;transition:transform .2s}
+#mn.sbc .sb{transform:translateX(-100%)}
+#mn .sb .lb{display:inline-block;background:#0A0A0A;color:#fff;font-weight:900;font-size:13px;padding:3px 10px;border-radius:6px;margin-bottom:10px}
+#mn .gh{width:100%;display:flex;align-items:center;gap:6px;border:4px solid #0A0A0A;border-radius:9px;font-weight:900;font-size:13px;padding:6px 8px;margin-top:8px;cursor:pointer;color:#0A0A0A;text-align:left}
+#mn .gh.c0{background:#BF8CFF}#mn .gh.c1{background:#7EF0A5}
+#mn .gh.cur{box-shadow:3px 3px 0 #0A0A0A}
+#mn .gh em{margin-left:auto;font-style:normal;background:#fff;border:2px solid #0A0A0A;border-radius:6px;font-size:11px;padding:0 5px}
+#mn .it{display:flex;gap:6px;width:calc(100% - 12px);margin:5px 0 0 12px;border:3px solid transparent;background:transparent;border-radius:8px;padding:5px 6px;font-weight:800;font-size:12.5px;cursor:pointer;text-align:left;color:#0A0A0A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mn .it.on{background:#FFE81A;border-color:#0A0A0A;font-weight:900}
+#mn .it.hide,#mn .gh.hide{display:none}
+#mn .tool{position:absolute;right:14px;top:10px;z-index:9;display:flex;gap:8px}
+#mn .tool button{border:4px solid #0A0A0A;background:#FFE81A;box-shadow:4px 4px 0 #0A0A0A;border-radius:10px;font-weight:900;font-size:14px;padding:5px 12px;cursor:pointer;color:#0A0A0A;font-family:inherit}
+#mn .tool button:disabled{opacity:.4;cursor:default}
+#mn .tool button.x{background:#FF6B45}
+#mn .tool button[aria-expanded=true]{box-shadow:2px 2px 0 #0A0A0A;transform:translate(2px,2px)}
+#mn .stage{position:absolute;left:clamp(170px,17vw,230px);right:0;top:0;bottom:0;transition:left .2s}
+#mn.sbc .stage{left:0}
+#mn .sl{display:none;position:absolute;inset:0;padding:clamp(56px,10vh,84px) clamp(18px,4vw,60px) clamp(46px,8vh,64px);overflow:hidden}
+#mn .sl.on{display:block}
+#mn .sl.bgy{background:#FFE81A}#mn .sl.bgp{background:#BF8CFF}#mn .sl.bgm{background:#7EF0A5}#mn .sl.bgo{background:#FF6B45}#mn .sl.bgc{background:#FBF7EF}
+#mn .tag{display:inline-block;background:#0A0A0A;color:#fff;font-weight:900;font-size:clamp(11px,1.3vw,15px);padding:3px 10px;border-radius:6px}
+#mn .big{font-weight:900;line-height:1.1;margin:8px 0 12px;-webkit-text-stroke:clamp(3px,.45vw,6px) #0A0A0A;paint-order:stroke fill;text-shadow:clamp(3px,.5vw,7px) clamp(3px,.5vw,7px) 0 #0A0A0A;color:#fff;font-size:clamp(24px,3.6vw,50px)}
+#mn .big.h1{font-size:clamp(30px,5vw,68px)}
+#mn .big.cy{color:#FFE81A}#mn .big.cp{color:#BF8CFF}#mn .big.cm{color:#7EF0A5}#mn .big.co{color:#FF6B45}
+#mn .big .ch{opacity:1}
+#mn .big.typing .ch{animation:mnch 0s linear both;animation-delay:calc(var(--i)*.06s)}
+@keyframes mnch{from{opacity:0}to{opacity:1}}
+#mn .big .cur{display:inline-block;width:.08em;height:.9em;background:#0A0A0A;margin-left:.08em;vertical-align:-.08em;animation:mnblink 1s steps(1) infinite}
+@keyframes mnblink{50%{opacity:0}}
+#mn .sub{font-size:clamp(13px,1.7vw,22px);font-weight:900;margin:0 0 12px}
+#mn .grid{display:grid;gap:clamp(10px,1.6vw,20px);grid-template-columns:repeat(var(--n,2),minmax(0,1fr));max-width:min(100%,980px)}
+#mn .box{border:5px solid #0A0A0A;box-shadow:8px 8px 0 #0A0A0A;background:#fff;border-radius:12px;padding:clamp(8px,1.2vw,15px);font-size:clamp(11.5px,1.35vw,17px);font-weight:800;line-height:1.5}
+#mn .box h4{margin:0 0 4px;font-size:clamp(13px,1.6vw,20px);font-weight:900}
+#mn .box.y{background:#FFE81A}#mn .box.p{background:#BF8CFF}#mn .box.m{background:#7EF0A5}#mn .box.o{background:#FF6B45}#mn .box.k{background:#0A0A0A;color:#fff;box-shadow:8px 8px 0 #8a36bd}
+#mn .box .num{display:inline-block;background:#0A0A0A;color:#fff;border-radius:7px;padding:0 9px;margin-right:6px;font-weight:900}
+#mn .sl.lgs .grid{max-width:min(58%,720px)}#mn .wide{grid-column:1/-1}
+#mn .open-btn{display:inline-block;margin-top:8px;border:4px solid #0A0A0A;background:#fff;box-shadow:4px 4px 0 #0A0A0A;border-radius:9px;font-weight:900;font-size:clamp(12px,1.3vw,16px);padding:5px 12px;cursor:pointer;color:#0A0A0A;font-family:inherit}
+#mn .open-btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #0A0A0A}
+#mn .cast{position:absolute;right:clamp(14px,3vw,48px);top:clamp(60px,11vh,92px);display:flex;gap:10px;z-index:1;align-items:flex-end}
+#mn .cast.lg{top:50%;transform:translateY(-50%)}
+#mn .chr{position:relative;width:clamp(56px,8vw,110px);height:clamp(56px,8vw,110px)}
+#mn .cast.lg .chr{width:clamp(90px,14vw,190px);height:clamp(90px,14vw,190px)}
+#mn .chr .bd2{position:absolute;inset:5%;border-radius:50%;border:5px solid #0A0A0A;box-shadow:6px 6px 0 #0A0A0A}
+#mn .chr svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#mn .bb{position:absolute;right:100%;top:0;margin-right:6px;background:#fff;border:4px solid #0A0A0A;box-shadow:4px 4px 0 #0A0A0A;border-radius:10px;padding:4px 8px;font-size:clamp(10px,1.1vw,14px);font-weight:900;white-space:nowrap}
+#mn .ground{position:absolute;left:0;right:0;bottom:0;height:min(9vh,64px);pointer-events:none;display:flex;justify-content:space-around;align-items:flex-end;font-size:min(7vw,9vh);line-height:1}
+#mn .chart{display:flex;align-items:flex-end;gap:clamp(6px,1.2vw,16px);height:clamp(110px,22vh,190px);padding:6px 6px 0;border-bottom:4px solid #0A0A0A}
+#mn .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+#mn .col .v{font-weight:900;font-size:clamp(10px,1.2vw,15px);margin-bottom:3px;animation:mnpopv .3s ease both;animation-delay:calc(var(--i)*.12s + .7s)}
+#mn .col .br{width:100%;max-width:64px;border:4px solid #0A0A0A;border-radius:8px 8px 0 0;background:#BF8CFF;transform-origin:bottom;animation:mnpop .7s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--i)*.12s)}
+#mn .col:nth-child(3n+2) .br{background:#7EF0A5}#mn .col:nth-child(3n) .br{background:#FFE81A}
+#mn .lab{display:flex;gap:clamp(6px,1.2vw,16px);padding:4px 6px 0;font-size:clamp(10px,1.1vw,14px);font-weight:900}
+#mn .lab span{flex:1;text-align:center;min-width:0}
+#mn .flow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#mn .flow .tile{border:4px solid #0A0A0A;border-radius:10px;padding:5px 10px;font-weight:900;font-size:clamp(11px,1.3vw,16px);background:#fff;transform-origin:center;animation:mnpop .7s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--i)*.12s)}
+#mn .flow .ar{font-weight:900;font-size:20px}
+@keyframes mnpop{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes mnpopv{from{opacity:0}to{opacity:1}}
+#mn .pg{position:absolute;left:50%;bottom:clamp(8px,2vh,16px);transform:translateX(-50%);z-index:6;display:flex;align-items:center;gap:10px;font-weight:900;font-size:13px}
+#mn .dots{display:flex;gap:6px}
+#mn .dots i{width:12px;height:12px;border:3px solid #0A0A0A;border-radius:50%;background:#fff;cursor:pointer}
+#mn .dots i.on{background:#FFE81A;transform:scale(1.25)}
+#mn .red{color:#ff1f1f;font-weight:900}
+@media (prefers-reduced-motion:reduce){#mn *{animation:none!important}}
+@media (max-width:900px){#mn .sb{width:210px;box-shadow:6px 0 0 #0A0A0A}#mn .stage{left:0!important}#mn .grid{--n:1!important}#mn .cast{display:none}}
+</style>
+<button id="cbFab" type="button" aria-label="챗봇 열기" title="챗봇">💬</button>
+<div id="cb" role="dialog" aria-label="가계부 챗봇">
+  <div class="hd" id="cbHd"><span>🤖</span><b>가계부 챗봇</b><button type="button" id="cbList" title="자주 하는 질문 보기">질문 목록</button><button type="button" id="cbX" aria-label="챗봇 닫기">✕</button></div>
+  <div class="bd" id="cbBd"></div>
+  <form class="ft" id="cbForm"><input id="cbIn" type="text" placeholder="궁금한 내용을 입력하세요" autocomplete="off"><button type="submit">보내기</button></form>
+  <div class="rz" id="cbRz" title="크기 조절"></div>
+</div>
+<div id="mn" role="dialog" aria-label="사용 매뉴얼">
+  <aside class="sb" id="mnSb"></aside>
+  <div class="tool"><button type="button" id="mnTg" aria-expanded="true" aria-label="사이드바 접기·열기">☰ 목록</button><button type="button" id="mnPv">◀</button><button type="button" id="mnNx">▶</button><button type="button" class="x" id="mnClose">✕ 닫기</button></div>
+  <div class="stage" id="mnStage"></div>
+  <div class="pg"><div class="dots" id="mnDots"></div><span id="mnPn"></span></div>
+</div>
+<script id="addon-chatbot-manual-script">
+(()=>{
+const $=s=>document.querySelector(s);
+const clickNav=id=>{const b=document.querySelector('.nav-item[data-page-target="'+id+'"]');if(b){b.click();return}try{setPage(id)}catch(e){}};
+/* ---------- 챗봇 ---------- */
+const FAQ=[
+{q:'순자산은 어디에서 확인하나요?',k:['순자산','자산','누계'],a:'왼쪽 메뉴 [순자산_현황]에서 근로·사업·주식·부동산 누계값과 순자산 누적 추세를 확인합니다. 대시보드를 열면 처음 보이는 화면입니다.',t:{p:'netWorth',l:'순자산_현황'}},
+{q:'보는 기간은 어떻게 바꾸나요?',k:['기간','연도','월','13개월'],a:'상단 [기간]에서 최근 13개월·기본·전체·연도(2019~2026)를 고르고, 옆의 [전체 월] 목록에서 특정 월을 고릅니다.',t:{m:3,l:'매뉴얼 3쪽 · 화면 구성'}},
+{q:'월평균과 총액은 어떻게 바꾸나요?',k:['월평균','총액','평균','집계'],a:'상단의 [연도 별 월평균]과 [연도 별 총액] 버튼으로 집계 방식을 바꿉니다.',t:{m:3,l:'매뉴얼 3쪽 · 화면 구성'}},
+{q:'성현·지혜 별로 따로 볼 수 있나요?',k:['성현','지혜','소유자','사람','개인'],a:'상단 [소유자]에서 전체·성현·지혜 중 하나를 고르면 해당 소유자 기준으로 다시 표시됩니다.',t:{m:3,l:'매뉴얼 3쪽 · 화면 구성'}},
+{q:'월별 수입·지출·저축은 어디서 보나요?',k:['수입','지출','저축','월별','요약'],a:'[핵심 요약] 메뉴에서 월별 수입·지출·추정 저축액을 확인합니다.',t:{p:'summary',l:'핵심 요약'}},
+{q:'8개년 흐름은 어디서 보나요?',k:['8개년','추세','흐름','연도별'],a:'[항목별 추세_8개년]에서 누적값과 해당 연도 변동값을 나누어 비교하고, [재무 리뷰_8개년]에서 표로 확인합니다.',t:{p:'trend',l:'항목별 추세_8개년'}},
+{q:'최근 13개월 현황은 어디서 보나요?',k:['13개월','최근'],a:'[재무 리뷰_13개월]에서 최근 13개월의 월별 재무 리뷰를, [항목별 추세_13개월]에서 같은 기간의 추세를 확인합니다.',t:{p:'review13',l:'재무 리뷰_13개월'}},
+{q:'리뷰 표의 항목을 차트로 보려면?',k:['차트','그래프','항목','선택'],a:'[선택 항목 차트]에서 재무 리뷰의 대구분·중구분·상세내역을 클릭하면 기간별 차트가 표시됩니다.',t:{p:'reviewItem',l:'선택 항목 차트'}},
+{q:'근로·사업·투자소득은 어디서 보나요?',k:['근로','사업','투자','주식','부동산','소득'],a:'[근로소득], [사업소득], [투자소득_주식], [투자소득_부동산] 메뉴에서 각각 확인합니다. 먼저 근로소득 화면으로 이동합니다.',t:{p:'chartLabor',l:'근로소득'}},
+{q:'데이터 기준 파일과 기간은 어디서 보나요?',k:['기준','파일','엑셀','갱신','업데이트','출처','데이터'],a:'화면 상단 제목 옆 출처 줄에 원본 엑셀 파일명, 기간, 재무 리뷰 행 수가 표시됩니다. 새 엑셀로 갱신하려면 대시보드를 다시 제작·배포해야 합니다.',t:{m:9,l:'매뉴얼 9쪽 · 데이터 기준'}}
+];
+const cb=$('#cb'),bd=$('#cbBd');
+const add=(h,c)=>{const d=document.createElement('div');d.className='m '+c;if(typeof h==='string')d.textContent=h;else d.appendChild(h);bd.appendChild(d);bd.scrollTop=bd.scrollHeight;return d};
+const showFaq=()=>{const w=document.createElement('div');w.className='faq';const p=document.createElement('div');p.textContent='자주 하는 질문입니다. 눌러서 확인하세요.';p.style.marginBottom='6px';w.appendChild(p);FAQ.forEach((f,i)=>{const b=document.createElement('button');b.type='button';b.innerHTML='<i>'+(i+1)+'.</i>';b.append(f.q);b.onclick=()=>ask(i);w.appendChild(b)});add(w,'b')};
+const ask=i=>{const f=FAQ[i];add(f.q,'u');const w=document.createElement('div');w.append(f.a);const g=document.createElement('button');g.type='button';g.className='go';g.textContent='상세 페이지 ▶';g.title=f.t.l;g.onclick=()=>{if(f.t.m)openManual(f.t.m-1);else{closeManual();clickNav(f.t.p)}};w.appendChild(document.createElement('br'));w.appendChild(g);add(w,'b')};
+const match=s=>{s=s.replace(/\s/g,'');let best=-1,sc=0;FAQ.forEach((f,i)=>{let n=0;f.k.forEach(k=>{if(s.includes(k))n+=k.length});if(n>sc){sc=n;best=i}});return best};
+const openCb=()=>{if(!cb.classList.contains('open')){cb.classList.add('open');if(!bd.children.length){add('안녕하세요. 가계부 대시보드 챗봇입니다. 아래 질문을 눌러 보세요.','b');showFaq()}fit();$('#cbIn').focus()}};
+const closeCb=()=>cb.classList.remove('open');
+$('#cbFab').onclick=()=>cb.classList.contains('open')?closeCb():openCb();
+$('#cbX').onclick=closeCb;
+$('#cbList').onclick=showFaq;
+$('#cbForm').onsubmit=e=>{e.preventDefault();const v=$('#cbIn').value.trim();if(!v)return;$('#cbIn').value='';const i=match(v);if(i>=0)ask(i);else{add(v,'u');add('해당 질문을 찾지 못했습니다. 아래 자주 하는 질문에서 골라 주세요.','b');showFaq()}};
+document.addEventListener('click',e=>{if(e.target.closest('.sidebar .chat')){e.preventDefault();openCb()}});
+/* 이동·크기 */
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const fit=()=>{const W=innerWidth,H=innerHeight;if(!cb.style.width){cb.style.width=Math.min(380,W-24)+'px';cb.style.height=Math.min(540,H-100)+'px';cb.style.left=Math.max(8,W-Math.min(380,W-24)-18)+'px';cb.style.top=Math.max(8,H-Math.min(540,H-100)-90)+'px'}
+ const r=cb.getBoundingClientRect();cb.style.width=Math.min(r.width,W-8)+'px';cb.style.height=Math.min(r.height,H-8)+'px';cb.style.left=clamp(r.left,0,Math.max(0,W-Math.min(r.width,W-8)))+'px';cb.style.top=clamp(r.top,0,Math.max(0,H-Math.min(r.height,H-8)))+'px'};
+addEventListener('resize',()=>{if(cb.classList.contains('open'))fit()});
+const drag=(h,fn)=>{h.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;e.preventDefault();h.setPointerCapture(e.pointerId);const r=cb.getBoundingClientRect(),sx=e.clientX,sy=e.clientY;const mv=ev=>fn(ev.clientX-sx,ev.clientY-sy,r);const up=()=>{h.removeEventListener('pointermove',mv);h.removeEventListener('pointerup',up);h.removeEventListener('pointercancel',up)};h.addEventListener('pointermove',mv);h.addEventListener('pointerup',up);h.addEventListener('pointercancel',up)})};
+drag($('#cbHd'),(dx,dy,r)=>{cb.style.left=clamp(r.left+dx,0,innerWidth-r.width)+'px';cb.style.top=clamp(r.top+dy,0,innerHeight-r.height)+'px'});
+drag($('#cbRz'),(dx,dy,r)=>{cb.style.width=clamp(r.width+dx,280,innerWidth-r.left)+'px';cb.style.height=clamp(r.height+dy,320,innerHeight-r.top)+'px'});
+/* ---------- 매뉴얼 ---------- */
+const mn=$('#mn'),stage=$('#mnStage');
+const rows=(typeof RAW_ROWS!=='undefined'?RAW_ROWS:[]);
+const byYear={},byOwner={};rows.forEach(r=>{const y=String(r[0]).slice(0,4);byYear[y]=(byYear[y]||0)+1;byOwner[r[1]]=(byOwner[r[1]]||0)+1});
+const nf=n=>Number(n).toLocaleString('ko-KR');
+const face=(c,mouth)=>'<svg viewBox="0 0 100 100"><g data-c="1"><ellipse cx="50" cy="52" rx="30" ry="30" fill="'+c+'" stroke="#0A0A0A" stroke-width="4"/><circle cx="40" cy="48" r="4" fill="#0A0A0A"/><circle cx="60" cy="48" r="4" fill="#0A0A0A"/><path d="'+(mouth||'M42 62 Q50 70 58 62')+'" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linecap="round"/></g></svg>';
+const chr=(bg,emoji,bub)=>'<div class="chr"><div class="bd2" style="background:'+bg+'"></div><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:clamp(28px,4.5vw,60px)">'+emoji+'</div>'+(bub?'<div class="bb">'+bub+'</div>':'')+'</div>';
+const bars=(arr)=>{const mx=Math.max(1,...arr.map(a=>a[1]));return '<div class="chart">'+arr.map((a,i)=>'<div class="col" style="--i:'+i+'"><div class="v">'+nf(a[1])+'</div><div class="br" style="height:'+Math.max(4,a[1]/mx*88)+'%"></div></div>').join('')+'</div><div class="lab">'+arr.map(a=>'<span>'+a[0]+'</span>').join('')+'</div>'};
+const open=(p,l)=>'<button type="button" class="open-btn" data-go="'+p+'">▶ '+l+'</button>';
+const yrs=Object.keys(byYear).sort();
+const SL=[
+{g:'도입',t:'표지',bg:'bgy',h:'엑셀 가계부 대시보드<br>사용 매뉴얼',cls:'h1 cp',cast:'lg',c:chr('#CFE3FA','🏠')+chr('#FFDCDC','🙂'),tag:'TUTORIAL',body:()=>'<p class="sub">주요 기능과 주요 데이터 확인 방법 · 챗봇 포함</p><div class="grid" style="--n:2"><div class="box m">📅 작성일 2026.11.14</div><div class="box o">📊 데이터 2019.01 ~ 2026.10</div></div>'},
+{g:'도입',t:'목차',bg:'bgc',h:'이 매뉴얼의 순서',cls:'cm',cast:'',c:chr('#FFE29A','📖'),tag:'INDEX',body:()=>'<div class="grid" style="--n:2"><div class="box y"><span class="num">1</span>화면 구성<br>사이드바·필터 (3쪽)</div><div class="box p"><span class="num">2</span>주요 데이터 보기<br>순자산·요약·리뷰·차트 (4~7쪽)</div><div class="box m"><span class="num">3</span>챗봇 활용<br>질문 10개와 상세 페이지 (8쪽)</div><div class="box o"><span class="num">4</span>데이터 기준 확인<br>파일·기간·건수 (9쪽)</div><div class="box k wide">각 쪽의 [대시보드에서 열기] 버튼을 누르면 실제 화면으로 바로 이동합니다.</div></div>'},
+{g:'화면과 데이터',t:'화면 구성',bg:'bgp',h:'화면 구성과 필터',cls:'cy',c:chr('#FFDCDC','🧭','필터는 위쪽!'),tag:'01 화면 구성',body:()=>'<div class="grid"><div class="box y"><h4>📂 왼쪽 사이드바</h4>메뉴를 눌러 화면을 이동합니다. 맨 아래에 매뉴얼과 챗봇이 있습니다.</div><div class="box m"><h4>🗓 기간</h4>최근 13개월·기본·전체·연도(2019~2026)를 고릅니다.</div><div class="box o"><h4>📆 월·집계</h4>[전체 월]에서 월을 고르고 [연도 별 월평균]/[연도 별 총액]으로 전환합니다.</div><div class="box"><h4>👥 소유자</h4>전체·성현·지혜 중 하나를 고릅니다.</div><div class="box k wide">필터 적용 범위는 메뉴마다 다를 수 있으니 화면 안내 문구를 함께 확인하세요. <span class="red">[확인 필요]</span></div></div>'},
+{g:'화면과 데이터',t:'순자산_현황',bg:'bgm',h:'순자산 현황 보기',cls:'cp',c:chr('#FFE29A','🪙','처음 화면'),tag:'02 주요 데이터',body:()=>'<div class="flow" style="margin-bottom:14px"><span class="tile" style="--i:0;background:#FFE81A">근로 누계</span><span class="tile" style="--i:1;background:#BF8CFF">사업 누계</span><span class="tile" style="--i:2;background:#7EF0A5">주식 누계</span><span class="tile" style="--i:3;background:#FF6B45">부동산 누계</span><span class="ar">▶</span><span class="tile" style="--i:4;background:#fff">순자산 누적 추세</span></div><div class="grid"><div class="box"><h4>🔎 무엇을 보나요</h4>RAW DATA의 근로·사업·주식·부동산 누계값과 순자산 누적 추세입니다.</div><div class="box y"><h4>👆 확인 방법</h4>상단 기간·소유자를 바꾸고 추세선과 값을 비교합니다.</div></div>'+open('netWorth','대시보드에서 열기 · 순자산_현황')},
+{g:'화면과 데이터',t:'핵심 요약·추세',bg:'bgy',h:'핵심 요약과 추세',cls:'co',c:chr('#CFE3FA','📈'),tag:'03 주요 데이터',body:()=>'<div class="grid"><div class="box m"><h4>▦ 핵심 요약</h4>월별 수입·지출·추정 저축액을 한 화면에서 봅니다.</div><div class="box p"><h4>⌁ 항목별 추세_8개년</h4>누적값과 해당 연도 변동값을 나누어 비교합니다.</div><div class="box o"><h4>⌁ 항목별 추세_13개월</h4>최근 13개월의 항목별 흐름입니다.</div><div class="box k">월별 비교는 [핵심 요약], 장기 흐름은 [추세_8개년]에서 시작하세요.</div></div>'+open('summary','대시보드에서 열기 · 핵심 요약')+' '+open('trend','항목별 추세_8개년')},
+{g:'화면과 데이터',t:'재무 리뷰',bg:'bgc',h:'재무 리뷰 표 읽기',cls:'cm',c:chr('#FFDCDC','📒','2026은 10월까지'),tag:'04 주요 데이터',body:()=>'<div class="grid" style="--n:2"><div><div class="box" style="padding:8px"><h4>연도별 거래 건수(건)</h4>'+bars(yrs.map(y=>[y,byYear[y]]))+'</div></div><div class="grid" style="--n:1"><div class="box y"><h4>▤ 재무 리뷰_8개년</h4>행 계층(대구분·중구분·상세내역)과 연도 열로 구성됩니다.</div><div class="box p"><h4>▤ 재무 리뷰_13개월</h4>최근 13개월을 월별로 봅니다.</div></div></div>'+open('review','대시보드에서 열기 · 재무 리뷰_8개년')+' '+open('review13','재무 리뷰_13개월')},
+{g:'화면과 데이터',t:'선택 항목 차트',bg:'bgp',h:'항목을 차트로 보기',cls:'cy',c:chr('#FFE29A','📊','클릭!'),tag:'05 주요 데이터',body:()=>'<div class="grid"><div class="box y"><h4>① 항목 클릭</h4>[선택 항목 차트]에서 대구분·중구분·상세내역을 누릅니다.</div><div class="box m"><h4>② 기간별 차트</h4>선택한 항목의 기간별 값이 차트로 표시됩니다.</div><div class="box o"><h4>③ 소득 4종 화면</h4>근로소득·사업소득·투자소득_주식·투자소득_부동산 메뉴로 따로 열 수 있습니다.</div><div class="box k">여러 항목 비교는 화면의 다중 선택 기능을 사용합니다.</div></div>'+open('reviewItem','대시보드에서 열기 · 선택 항목 차트')+' '+open('chartLabor','근로소득')},
+{g:'챗봇과 기준',t:'챗봇 사용법',bg:'bgm',h:'챗봇 사용법',cls:'cp',c:chr('#FFE81A','🤖','질문 10개'),tag:'06 챗봇',body:()=>'<div class="grid"><div class="box y"><h4>💬 열기</h4>화면 오른쪽 아래 💬 버튼 또는 사이드바 [챗봇]을 누릅니다.</div><div class="box p"><h4>❓ 질문</h4>자주 하는 질문 10개를 누르거나 직접 입력합니다.</div><div class="box o"><h4>▶ 상세 페이지</h4>답변 아래 [상세 페이지] 버튼이 해당 화면으로 이동합니다.</div><div class="box"><h4>↔ 이동·크기</h4>위쪽 제목줄을 끌어 이동하고, 오른쪽 아래 모서리를 끌어 크기를 바꿉니다.</div></div><button type="button" class="open-btn" data-cb="1">▶ 챗봇 열기</button>'},
+{g:'챗봇과 기준',t:'데이터 기준',bg:'bgy',h:'데이터 기준 확인',cls:'co',c:chr('#CFE3FA','🗂','현재 값'),tag:'07 데이터 기준',body:()=>'<div class="grid" style="--n:2"><div class="box" style="padding:8px"><h4>소유자별 거래 건수(건)</h4>'+bars(Object.keys(byOwner).map(k=>[k,byOwner[k]]))+'</div><div class="grid" style="--n:1"><div class="box m"><h4>📄 현재 데이터</h4>거래 '+nf(rows.length)+'건 · 재무 리뷰 '+nf((typeof FINANCIAL_REVIEW_DATA!=='undefined'?FINANCIAL_REVIEW_DATA:[]).length)+'행</div><div class="box p"><h4>📍 확인 위치</h4>화면 상단 제목 옆 출처 줄(파일명·기간·행 수)</div></div></div><div class="box k" style="margin-top:12px;max-width:980px">새 엑셀 반영은 화면에서 올리는 방식이 아니라, 대시보드를 다시 제작·배포해야 합니다.</div>'},
+{g:'마무리',t:'마무리',bg:'bgo',h:'확인 순서 한눈에',cls:'cy',cast:'lg',c:chr('#CFE3FA','🌱')+chr('#FFE29A','🎉'),tag:'END',body:()=>'<div class="grid" style="--n:2"><div class="box y"><span class="num">1</span>순자산_현황으로 전체 확인</div><div class="box m"><span class="num">2</span>기간·소유자 필터 조정</div><div class="box p"><span class="num">3</span>핵심 요약·리뷰로 세부 확인</div><div class="box"><span class="num">4</span>모르면 챗봇에 질문</div></div><button type="button" class="open-btn" data-close="1">▶ 대시보드로 돌아가기</button>'}
+];
+const N=SL.length;let cur=0;const gcol={};let gi=0;SL.forEach(s=>{if(!(s.g in gcol))gcol[s.g]=gi++%2});
+const opened={};
+const buildSb=()=>{const sb=$('#mnSb');let h='<span class="lb">목차</span>';const gs=[...new Set(SL.map(s=>s.g))];gs.forEach(g=>{const idx=SL.map((s,i)=>s.g===g?i:-1).filter(i=>i>=0);h+='<button type="button" class="gh c'+gcol[g]+'" data-g="'+g+'" aria-expanded="true"><span>▾</span><span>'+g+'</span><em>'+idx.length+'쪽</em></button>';idx.forEach(i=>{h+='<button type="button" class="it" data-i="'+i+'" data-grp="'+g+'">'+(i+1)+'. '+SL[i].t+'</button>'})});sb.innerHTML=h};
+const buildSl=()=>{stage.innerHTML=SL.map((s,i)=>'<section class="sl '+s.bg+(s.cast==='lg'?' lgs':'')+'" data-i="'+i+'"><span class="tag">'+s.tag+'</span><h2 class="big '+s.cls+'" style="margin-top:8px">'+s.h+'</h2><div class="sbody"></div>'+(s.c?'<div class="cast'+(s.cast==='lg'?' lg':'')+'">'+s.c+'</div>':'')+'<div class="ground"><span>🌳</span><span>🌼</span><span>🦆</span><span>🌼</span><span>🌳</span><span>🌼</span></div></section>').join('');$('#mnDots').innerHTML=SL.map((s,i)=>'<i data-i="'+i+'" title="'+(i+1)+'. '+s.t+'"></i>').join('')};
+const typeIt=el=>{if(!el.dataset.src)el.dataset.src=el.innerHTML;const parts=el.dataset.src.split('<br>');let n=0;el.innerHTML=parts.map(p=>[...p].map(c=>'<span class="ch" style="--i:'+(n++)+'">'+c+'</span>').join('')).join('<br>')+'<span class="cur"></span>';el.classList.remove('typing');void el.offsetWidth;el.style.setProperty('--tot',n);el.classList.add('typing');el.querySelectorAll('.ch').forEach(c=>{c.style.animationDuration='.01s'})};
+const goto=i=>{cur=clamp(i,0,N-1);stage.querySelectorAll('.sl').forEach(s=>{const on=+s.dataset.i===cur;if(on&&!s.querySelector('.sbody').innerHTML)s.querySelector('.sbody').innerHTML=SL[cur].body();if(on){const b=s.querySelector('.sbody');const c=b.innerHTML;b.innerHTML='';b.innerHTML=c;typeIt(s.querySelector('.big'))}s.classList.toggle('on',on)});
+ document.querySelectorAll('#mnSb .it').forEach(b=>{b.classList.toggle('on',+b.dataset.i===cur)});const g=SL[cur].g;opened[g]=true;
+ document.querySelectorAll('#mnSb .gh').forEach(b=>{const gg=b.dataset.g;const isOpen=opened[gg]!==false&&(gg===g||opened[gg]);b.setAttribute('aria-expanded',isOpen?'true':'false');b.firstChild.textContent=isOpen?'▾':'▸';b.classList.toggle('cur',gg===g)});
+ document.querySelectorAll('#mnSb .it').forEach(b=>b.classList.toggle('hide',!(opened[b.dataset.grp])));
+ document.querySelectorAll('#mnDots i').forEach(d=>d.classList.toggle('on',+d.dataset.i===cur));
+ $('#mnPn').textContent=(cur+1)+' / '+N;$('#mnPv').disabled=cur===0;$('#mnNx').disabled=cur===N-1;
+ const on=document.querySelector('#mnSb .it.on');if(on&&on.scrollIntoView)try{on.scrollIntoView({block:'nearest'})}catch(e){}};
+function openManual(i){mn.classList.add('open');if(innerWidth<=900)mn.classList.add('sbc');goto(i||0)}
+function closeManual(){mn.classList.remove('open')}
+window.openManual=openManual;window.closeManual=closeManual;
+buildSb();buildSl();
+mn.addEventListener('click',e=>{const t=e.target;let b;
+ if(b=t.closest('#mnSb .gh')){const g=b.dataset.g;const cg=SL[cur].g;if(g===cg)return;opened[g]=!opened[g];goto(cur);return}
+ if(b=t.closest('#mnSb .it')){goto(+b.dataset.i);return}
+ if(b=t.closest('#mnDots i')){goto(+b.dataset.i);return}
+ if(t.closest('#mnPv')){goto(cur-1);return}if(t.closest('#mnNx')){goto(cur+1);return}
+ if(t.closest('#mnClose')){closeManual();return}
+ if(t.closest('#mnTg')){const c=mn.classList.toggle('sbc');$('#mnTg').setAttribute('aria-expanded',c?'false':'true');return}
+ if(b=t.closest('[data-go]')){closeManual();clickNav(b.dataset.go);return}
+ if(t.closest('[data-cb]')){openCb();return}
+ if(t.closest('[data-close]')){closeManual()}});
+document.addEventListener('keydown',e=>{if(!mn.classList.contains('open'))return;if(/INPUT|TEXTAREA|SELECT/.test((e.target||{}).tagName||''))return;if(e.key==='ArrowRight')goto(cur+1);else if(e.key==='ArrowLeft')goto(cur-1);else if(e.key==='Escape')closeManual();else if(e.key==='s'||e.key==='S')$('#mnTg').click()});
+/* 사이드바에 매뉴얼 메뉴 추가 */
+const addMenu=()=>{const menu=document.querySelector('.sidebar .menu');if(!menu||menu.querySelector('#mnOpen'))return;const b=document.createElement('button');b.type='button';b.id='mnOpen';b.className='nav-item';b.innerHTML='<span class="nav-icon">📖</span>매뉴얼';b.addEventListener('click',()=>openManual(0));menu.appendChild(b)};
+addMenu();new MutationObserver(addMenu).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+<!--ADDON-END-->
 </html>
 <script id="net-worth-only-first-x-grid-contract">
 (()=>{
