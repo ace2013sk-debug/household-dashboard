@@ -262,7 +262,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
       <button class="nav-item" data-page-target="hierarchy"><span class="nav-icon">Σ</span>자산 현황</button>
       <button class="nav-item" data-page-target="hierarchyList"><span class="nav-icon">Σ</span>재무 현황</button>
     </nav>
-    <button class="chat" type="button">챗봇</button>
+    <button class="chat" type="button">챗봇</button><button id="modeBtn" type="button" data-target="sample.html" title="클릭하면 샘플 데이터 화면으로 전환합니다"><span>🔀 샘플/리얼</span><small>현재: 리얼</small></button>
   </aside>
   <main class="shell">
     <header class="top">
@@ -595,7 +595,7 @@ document.addEventListener('mousemove',stopTrendChartHover,true);
   new MutationObserver(install).observe(document.body,{childList:true,subtree:true});
   setTimeout(install,0);
 })();
-</script></body>
+</script><style id="mode-btn-css">button.chat{margin-bottom:8px!important}#modeBtn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;height:46px;margin:0 14px 16px;padding:0 11px;border:1.5px solid #833ab4;border-radius:16px;background:#fff;color:#833ab4;font:800 13px/1.2 Pretendard,"Malgun Gothic",sans-serif;cursor:pointer}#modeBtn small{font-size:10.5px;font-weight:700;color:#7a8399}#modeBtn:hover{background:#f6effb}</style><script>document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('#modeBtn');if(b)location.href=b.dataset.target});</script></body>
 <script>
 (()=>{
   const style=document.createElement('style');
